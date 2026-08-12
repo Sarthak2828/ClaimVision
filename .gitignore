@@ -1,0 +1,40 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment and Secrets
+.env
+*.env
+!.env.example
+
+# Local development helper
+powershell.cmd
+
+# Large Data files (keep samples/structures, ignore bulk raw data)
+data/raw/*.csv
+data/processed/*.csv
+data/processed/*.db
+data/processed/*.duckdb
+data/analytical/*.csv
+data/analytical/*.parquet
+*.sqlite
+*.db
+
+# Model artifacts
+models/*.joblib
+models/*.json
+models/*.pkl
+
+# Distribution / packaging
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# IDE files
+.vscode/
+.idea/
+*.swp

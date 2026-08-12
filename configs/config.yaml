@@ -1,0 +1,34 @@
+project:
+  name: "ClaimVision"
+  description: "Healthcare Claims Intelligence & Fraud Detection Platform"
+  version: "1.0.0"
+  random_seed: 42
+
+paths:
+  raw_data_dir: "data/raw"
+  processed_data_dir: "data/processed"
+  analytical_data_dir: "data/analytical"
+  database_path: "data/processed/claimvision.db"
+  models_dir: "models"
+  reports_dir: "reports"
+  figures_dir: "reports/figures"
+
+data:
+  urls:
+    train_labels: "https://raw.githubusercontent.com/sumeetshahu/Healthcare-Fraud-Detection/main/Data/Original/Training/Train.csv"
+    beneficiary: "https://raw.githubusercontent.com/sumeetshahu/Healthcare-Fraud-Detection/main/Data/Original/Training/Train_Beneficiarydata.csv"
+    inpatient: "https://raw.githubusercontent.com/sumeetshahu/Healthcare-Fraud-Detection/main/Data/Original/Training/Train_Inpatientdata.csv"
+    outpatient: "https://raw.githubusercontent.com/sumeetshahu/Healthcare-Fraud-Detection/main/Data/Original/Training/Train_Outpatientdata.csv"
+
+model:
+  target_col: "PotentialFraud"
+  test_size: 0.20
+  cv_folds: 5
+  classification_threshold: 0.35
+  xgboost:
+    n_estimators: 150
+    max_depth: 5
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    eval_metric: "logloss"
