@@ -1,6 +1,6 @@
 project:
   name: "ClaimVision"
-  description: "Healthcare Claims Intelligence & Fraud Detection Platform"
+  description: "Healthcare Claims Intelligence Platform"
   version: "1.0.0"
   random_seed: 42
 
@@ -8,7 +8,6 @@ paths:
   raw_data_dir: "data/raw"
   processed_data_dir: "data/processed"
   analytical_data_dir: "data/analytical"
-  database_path: "data/processed/claimvision.db"
   models_dir: "models"
   reports_dir: "reports"
   figures_dir: "reports/figures"
@@ -24,7 +23,9 @@ model:
   target_col: "PotentialFraud"
   test_size: 0.20
   cv_folds: 5
-  classification_threshold: 0.35
+  # Tuned decision threshold from full-dataset provider-level evaluation
+  # See reports/model_metrics.json for authoritative values
+  classification_threshold: 0.7674
   xgboost:
     n_estimators: 150
     max_depth: 5
