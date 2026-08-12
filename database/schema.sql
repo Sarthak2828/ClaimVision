@@ -1,22 +1,22 @@
 -- =====================================================================
--- ClaimVision — Healthcare Claims Star Schema DDL
--- Dialect: ANSI SQL / SQLite / PostgreSQL / DuckDB compatible
+-- ClaimVision — Canonical PostgreSQL Star-Schema DDL
+-- Database: PostgreSQL 14+ / 16+ / 18+
 -- =====================================================================
 
-DROP TABLE IF EXISTS fact_claims_unified;
-DROP TABLE IF EXISTS fact_inpatient_claims;
-DROP TABLE IF EXISTS fact_outpatient_claims;
-DROP TABLE IF EXISTS dim_beneficiaries;
-DROP TABLE IF EXISTS dim_providers;
+DROP TABLE IF EXISTS fact_claims_unified CASCADE;
+DROP TABLE IF EXISTS fact_inpatient_claims CASCADE;
+DROP TABLE IF EXISTS fact_outpatient_claims CASCADE;
+DROP TABLE IF EXISTS dim_beneficiaries CASCADE;
+DROP TABLE IF EXISTS dim_providers CASCADE;
 
 -- ---------------------------------------------------------------------
--- 1. dim_providers: Healthcare institutions/practitioners
+-- 1. dim_providers: Healthcare institutions/practitioners (Primary ML Entity)
 -- ---------------------------------------------------------------------
 CREATE TABLE dim_providers (
     provider_id             VARCHAR(30) PRIMARY KEY,
     potential_fraud         BOOLEAN NOT NULL,
     fraud_label             VARCHAR(5) NOT NULL CHECK (fraud_label IN ('Yes', 'No')),
-    created_at              TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at              TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 -- ---------------------------------------------------------------------
@@ -30,23 +30,23 @@ CREATE TABLE dim_beneficiaries (
     race                        INTEGER NOT NULL,
     state_id                    INTEGER NOT NULL,
     county_id                   INTEGER NOT NULL,
-    renal_disease               BOOLEAN NOT NULL DEFAULT 0,
-    chronic_alzheimer           BOOLEAN NOT NULL DEFAULT 0,
-    chronic_heartfailure        BOOLEAN NOT NULL DEFAULT 0,
-    chronic_kidneydisease       BOOLEAN NOT NULL DEFAULT 0,
-    chronic_cancer              BOOLEAN NOT NULL DEFAULT 0,
-    chronic_copd                BOOLEAN NOT NULL DEFAULT 0,
-    chronic_depression          BOOLEAN NOT NULL DEFAULT 0,
-    chronic_diabetes            BOOLEAN NOT NULL DEFAULT 0,
-    chronic_ischemicheart       BOOLEAN NOT NULL DEFAULT 0,
-    chronic_osteoporosis        BOOLEAN NOT NULL DEFAULT 0,
-    chronic_rheumatoidarthritis BOOLEAN NOT NULL DEFAULT 0,
-    chronic_stroke              BOOLEAN NOT NULL DEFAULT 0,
+    renal_disease               BOOLEAN NOT NULL DEFAULT FALSE,
+    chronic_alzheimer           BOOLEAN NOT NULL DEFAULT FALSE,
+    chronic_heartfailure        BOOLEAN NOT NULL DEFAULT FALSE,
+    chronic_kidneydisease       BOOLEAN NOT NULL DEFAULT FALSE,
+    chronic_cancer              BOOLEAN NOT NULL DEFAULT FALSE,
+    chronic_copd                BOOLEAN NOT NULL DEFAULT FALSE,
+    chronic_depression          BOOLEAN NOT NULL DEFAULT FALSE,
+    chronic_diabetes            BOOLEAN NOT NULL DEFAULT FALSE,
+    chronic_ischemicheart       BOOLEAN NOT NULL DEFAULT FALSE,
+    chronic_osteoporosis        BOOLEAN NOT NULL DEFAULT FALSE,
+    chronic_rheumatoidarthritis BOOLEAN NOT NULL DEFAULT FALSE,
+    chronic_stroke              BOOLEAN NOT NULL DEFAULT FALSE,
     ip_annual_reimbursement     NUMERIC(12,2) DEFAULT 0.0,
     ip_annual_deductible        NUMERIC(12,2) DEFAULT 0.0,
     op_annual_reimbursement     NUMERIC(12,2) DEFAULT 0.0,
     op_annual_deductible        NUMERIC(12,2) DEFAULT 0.0,
-    created_at                  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at                  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 -- ---------------------------------------------------------------------
@@ -70,7 +70,7 @@ CREATE TABLE fact_inpatient_claims (
     diagnosis_group_code    VARCHAR(20),
     primary_diagnosis_code  VARCHAR(20),
     primary_procedure_code  VARCHAR(20),
-    created_at              TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at              TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 -- ---------------------------------------------------------------------
@@ -89,11 +89,11 @@ CREATE TABLE fact_outpatient_claims (
     other_physician         VARCHAR(30),
     primary_diagnosis_code  VARCHAR(20),
     primary_procedure_code  VARCHAR(20),
-    created_at              TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at              TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 -- ---------------------------------------------------------------------
--- 5. fact_claims_unified: Consolidated view/table for fast analytics
+-- 5. fact_claims_unified: Consolidated fact table for fast analytical aggregations
 -- ---------------------------------------------------------------------
 CREATE TABLE fact_claims_unified (
     claim_id                VARCHAR(30) PRIMARY KEY,
@@ -108,11 +108,11 @@ CREATE TABLE fact_claims_unified (
     attending_physician     VARCHAR(30),
     operating_physician     VARCHAR(30),
     primary_diagnosis_code  VARCHAR(20),
-    created_at              TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at              TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 -- =====================================================================
--- Performance Indexes
+-- Performance Indexes (PostgreSQL B-Tree)
 -- =====================================================================
 CREATE INDEX idx_inpatient_provider      ON fact_inpatient_claims(provider_id);
 CREATE INDEX idx_inpatient_bene          ON fact_inpatient_claims(bene_id);

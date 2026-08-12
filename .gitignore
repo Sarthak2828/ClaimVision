@@ -38,3 +38,6 @@ build/
 .vscode/
 .idea/
 *.swp
+
+# PostgreSQL embedded data directory (local only)
+pgdata/

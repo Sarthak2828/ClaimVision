@@ -117,16 +117,16 @@ class PowerBIExporter:
         with self.db.engine.connect() as conn:
             df_trends = pd.read_sql("""
                 SELECT 
-                    SUBSTR(c.claim_start_date, 1, 7) AS claim_year_month,
+                    TO_CHAR(c.claim_start_date, 'YYYY-MM') AS claim_year_month,
                     COUNT(*) AS total_claims,
                     SUM(CASE WHEN c.claim_type = 'Inpatient' THEN 1 ELSE 0 END) AS inpatient_claims,
                     SUM(CASE WHEN c.claim_type = 'Outpatient' THEN 1 ELSE 0 END) AS outpatient_claims,
-                    ROUND(SUM(c.reimbursed_amount), 2) AS total_reimbursement,
-                    ROUND(AVG(c.reimbursed_amount), 2) AS avg_reimbursement,
+                    ROUND(SUM(c.reimbursed_amount)::numeric, 2) AS total_reimbursement,
+                    ROUND(AVG(c.reimbursed_amount)::numeric, 2) AS avg_reimbursement,
                     COUNT(DISTINCT c.provider_id) AS active_providers,
                     COUNT(DISTINCT c.bene_id) AS distinct_beneficiaries
                 FROM fact_claims_unified c
-                GROUP BY SUBSTR(c.claim_start_date, 1, 7)
+                GROUP BY TO_CHAR(c.claim_start_date, 'YYYY-MM')
                 ORDER BY claim_year_month ASC
             """, conn)
         trends_path = self.output_dir / "temporal_trends.csv"
@@ -142,10 +142,10 @@ class PowerBIExporter:
                     COUNT(c.claim_id) AS total_claims,
                     COUNT(DISTINCT c.bene_id) AS total_patients,
                     COUNT(DISTINCT c.provider_id) AS total_providers,
-                    ROUND(SUM(c.reimbursed_amount), 2) AS total_reimbursement,
-                    ROUND(AVG(c.reimbursed_amount), 2) AS avg_reimbursement,
-                    SUM(CASE WHEN p.potential_fraud = 1 THEN 1 ELSE 0 END) AS fraud_claims_count,
-                    ROUND(100.0 * SUM(CASE WHEN p.potential_fraud = 1 THEN 1 ELSE 0 END) / COUNT(c.claim_id), 2) AS fraud_claim_rate_pct
+                    ROUND(SUM(c.reimbursed_amount)::numeric, 2) AS total_reimbursement,
+                    ROUND(AVG(c.reimbursed_amount)::numeric, 2) AS avg_reimbursement,
+                    SUM(CASE WHEN p.potential_fraud = TRUE THEN 1 ELSE 0 END) AS fraud_claims_count,
+                    ROUND(100.0 * SUM(CASE WHEN p.potential_fraud = TRUE THEN 1 ELSE 0 END) / COUNT(c.claim_id), 2) AS fraud_claim_rate_pct
                 FROM fact_claims_unified c
                 JOIN dim_beneficiaries b ON c.bene_id = b.bene_id
                 JOIN dim_providers p ON c.provider_id = p.provider_id

@@ -16,7 +16,7 @@
 
 ## 2. What the Project Is
 
-ClaimVision is an enterprise-grade predictive analytics and fraud intelligence platform designed to detect fraudulent billing patterns among healthcare providers, identify clinical anomalies, explain suspicious flags via Game-Theoretic Explainable AI (SHAP), and deliver interactive decision-support reporting for payer executives, Special Investigation Units (SIU), and clinical auditors.
+ClaimVision is an production-minded predictive analytics and fraud intelligence platform designed to detect fraudulent billing patterns among healthcare providers, identify clinical anomalies, explain suspicious flags via Game-Theoretic Explainable AI (SHAP), and deliver interactive decision-support reporting for payer executives, Special Investigation Units (SIU), and clinical auditors.
 
 ### Explanation to a Non-Technical Stakeholder
 > In healthcare insurance, fraud costs payers and taxpayers tens of billions of dollars every year through schemes like billing for procedures never performed ("phantom billing"), exaggerating patient illness severity to receive higher reimbursement ("upcoding"), and submitting repetitive claims for the same patient. ClaimVision acts like an intelligent fraud-monitoring sentinel: it audits hundreds of thousands of medical claims, recognizes abnormal doctor and hospital billing behaviors, identifies high-risk healthcare providers, and clearly explains *why* a provider is suspicious (e.g., "bills 3.5x more per patient than peers and reports unusually long hospital stays"). These insights are delivered through visual executive dashboards so claims directors and investigators can freeze suspicious payouts and prioritize high-dollar audits.
@@ -139,8 +139,8 @@ ClaimVision resolves these challenges by combining robust statistical behavioral
 |---|---|---|---|---|---|
 | **Dummy Baseline (Majority)** | 0.00% | 0.00% | 0.0000 | 0.5000 | 0.0933 |
 | **Logistic Regression (Balanced)** | 48.42% | 91.09% | 0.6323 | 0.9694 | 0.7880 |
-| **XGBoost (Default Thr = 0.50)** | 55.26% | 83.17% | 0.6640 | **0.9714** | **0.7917** |
-| **XGBoost (Tuned Thr = 0.7729)** | **73.74%** | **72.28%** | **0.7300** | **0.9714** | **0.7917** |
+| **XGBoost (Default Thr = 0.50)** | 55.26% | 83.17% | 0.6640 | **0.9557** | **0.7369** |
+| **XGBoost (Tuned Thr = 0.7674)** | **66.00%** | **65.35%** | **0.6567** | **0.9557** | **0.7369** |
 
 - **5-Fold Stratified CV Mean ROC-AUC:** 0.9448
 - **Covering Index Query Execution Time:** 0.36 ms (reduced from full table scan of 558,211 rows)
@@ -216,8 +216,8 @@ ClaimVision resolves these challenges by combining robust statistical behavioral
 **Q12: Why is the Precision-Recall curve (PR-AUC) more informative than ROC-AUC here?**
 > ROC-AUC plots True Positive Rate vs False Positive Rate ($FPR = rac{FP}{FP + TN}$). When the negative class is massive ($TN$ is large), large surges in False Positives result in very small changes in $FPR$, making ROC-AUC appear deceptively high (e.g. 0.97+). PR-AUC plots Precision ($rac{TP}{TP + FP}$) against Recall ($rac{TP}{TP + FN}$), making it sensitive to False Positives and a truer reflection of performance under heavy class imbalance.
 
-**Q13: Why did you tune the classification threshold to 0.7729 rather than using 0.50?**
-> Because `scale_pos_weight=9.69` heavily weights the positive class, raw model probabilities are shifted upward. At default threshold 0.50, the model achieves high Recall (83.17%) but lower Precision (55.26%), producing 68 false positive investigations. By tuning the threshold along the Precision-Recall curve to 0.7729, we optimize F1-score to **0.7300**, boosting Precision to **73.74%** and reducing False Positives from 68 down to 26, matching real-world SIU operational capacity.
+**Q13: Why did you tune the classification threshold to 0.7674 rather than using 0.50?**
+> Because `scale_pos_weight=9.69` heavily weights the positive class, raw model probabilities are shifted upward. At default threshold 0.50, the model achieves high Recall (83.17%) but lower Precision (55.26%), producing 68 false positive investigations. By tuning the threshold along the Precision-Recall curve to 0.7674, we optimize F1-score to **0.6567**, boosting Precision to **66.00%** and reducing False Positives from 68 down to 26, matching real-world SIU operational capacity.
 
 ### Model Explainability (SHAP)
 **Q14: How does SHAP work mathematically and why is it superior to feature importance?**

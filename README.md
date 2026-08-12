@@ -5,7 +5,7 @@
 [![XGBoost](https://img.shields.io/badge/XGBoost-3.2%2B-orange.svg)](https://xgboost.readthedocs.io/)
 [![SHAP](https://img.shields.io/badge/SHAP-0.49%2B-brightgreen.svg)](https://shap.readthedocs.io/)
 [![Power BI](https://img.shields.io/badge/Power_BI-DAX_Enabled-yellow.svg)](https://powerbi.microsoft.com/)
-[![Tests](https://img.shields.io/badge/tests-12%20passed-success.svg)](https://pytest.org/)
+[![Tests](https://img.shields.io/badge/tests-13%20passed-success.svg)](https://pytest.org/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ---
@@ -30,10 +30,10 @@ All metrics reported below are **empirically measured** from the live CMS Medica
 | **Total Reimbursement Billed** | $556,543,140.00 |
 | **Fraudulent Providers (Ground Truth)** | 506 Providers (9.35% Base Rate) |
 | **Total Fraud Financial Exposure** | **$212,796,000.00** (38.2% of total portfolio payout) |
-| **XGBoost Test ROC-AUC** | **0.9714** (5-Fold CV Mean: 0.9448) |
-| **XGBoost Test PR-AUC** | **0.7917** |
-| **XGBoost Tuned F1-Score** | **0.7300** (Tuned Threshold: 0.7729) |
-| **XGBoost Tuned Precision / Recall** | **73.74% Precision** / **72.28% Recall** |
+| **XGBoost Test ROC-AUC** | **0.9557** (5-Fold CV Mean: 0.9477) |
+| **XGBoost Test PR-AUC** | **0.7369** |
+| **XGBoost Tuned F1-Score** | **0.6567** (Tuned Threshold: 0.7674) |
+| **XGBoost Tuned Precision / Recall** | **66.00% Precision** / **65.35% Recall** |
 | **SQL Covering Index Scan Time** | **0.36 milliseconds** (`EXPLAIN QUERY PLAN` verified) |
 | **Automated Pytest Suite** | **12 passed, 0 failed** in 14.28s |
 
@@ -55,9 +55,9 @@ All metrics reported below are **empirically measured** from the live CMS Medica
          - Fraud Heuristics (Phantom, Multiplicity)                                                                  │
          - Covering Index Optimization (0.36 ms)                                                                     ▼
                                                                                                           [ XGBoost Classifier ]
-                                                                                                       - scale_pos_weight = 9.69
-                                                                                                       - Stratified 5-Fold CV
-                                                                                                       - Precision-Recall Tuning
+                                                                                                       - scale_pos_weight (dynamic) = 9.6889
+                                                                                                       - Provider-Level Group Split + Stratified 5-Fold CV
+                                                                                                       - Precision-Recall Threshold Tuning (0.7674)
                                                                                                                      │
                                                     ┌────────────────────────────────────────────────────────────────┴───────────────────────┐
                                                     ▼                                                                                        ▼

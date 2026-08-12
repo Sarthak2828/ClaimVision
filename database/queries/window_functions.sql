@@ -1,5 +1,5 @@
 -- =====================================================================
--- Section 3: Window Functions & Analytical Partitioning
+-- Section 3: Window Functions & Analytical Partitioning (PostgreSQL)
 -- =====================================================================
 
 -- Q10: Provider Reimbursement Ranking Within Each State (DENSE_RANK)
@@ -8,7 +8,7 @@ WITH ProviderStateTotals AS (
         b.state_id,
         c.provider_id,
         p.fraud_label,
-        ROUND(SUM(c.reimbursed_amount), 2) AS total_state_reimbursement
+        ROUND(SUM(c.reimbursed_amount)::numeric, 2) AS total_state_reimbursement
     FROM fact_claims_unified c
     JOIN dim_beneficiaries b ON c.bene_id = b.bene_id
     JOIN dim_providers p ON c.provider_id = p.provider_id
@@ -28,10 +28,10 @@ LIMIT 20;
 -- Q11: Cumulative Running Total of Claims Payout Across Months
 WITH MonthlySummary AS (
     SELECT
-        SUBSTR(claim_start_date, 1, 7) AS claim_month,
-        ROUND(SUM(reimbursed_amount), 2) AS monthly_payout
+        TO_CHAR(claim_start_date, 'YYYY-MM') AS claim_month,
+        ROUND(SUM(reimbursed_amount)::numeric, 2) AS monthly_payout
     FROM fact_claims_unified
-    GROUP BY SUBSTR(claim_start_date, 1, 7)
+    GROUP BY TO_CHAR(claim_start_date, 'YYYY-MM')
 )
 SELECT
     claim_month,
@@ -45,7 +45,7 @@ WITH ProviderVolume AS (
     SELECT
         provider_id,
         COUNT(*) AS total_claims,
-        ROUND(SUM(reimbursed_amount), 2) AS total_reimbursement
+        ROUND(SUM(reimbursed_amount)::numeric, 2) AS total_reimbursement
     FROM fact_claims_unified
     GROUP BY provider_id
 )
@@ -67,8 +67,8 @@ SELECT
         PARTITION BY provider_id 
         ORDER BY claim_start_date, claim_id
         ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
-    ), 2) AS rolling_3claim_avg_amount
+    )::numeric, 2) AS rolling_3claim_avg_amount
 FROM fact_claims_unified
-WHERE provider_id IN (SELECT provider_id FROM dim_providers WHERE potential_fraud = 1 LIMIT 3)
+WHERE provider_id IN (SELECT provider_id FROM dim_providers WHERE potential_fraud = TRUE LIMIT 3)
 ORDER BY provider_id, claim_start_date
 LIMIT 25;

@@ -71,15 +71,15 @@
 │                                                                                                  │
 │  [src/model_pipeline.py]   ──▶ 1. Stratified 80/20 train/test split (Train=4,328, Test=1,082)   │
 │                                2. Benchmark baselines: Dummy (AUC=0.50), LogisticReg (AUC=0.969) │
-│                                3. Class Imbalance: scale_pos_weight = 9.69                       │
+│                                3. Class Imbalance: scale_pos_weight = <dynamic>                       │
 │                                4. 5-Fold Stratified Cross-Validation on XGBoost (Mean AUC=0.9448)│
-│                                5. Threshold Optimization: Calibrates threshold = 0.7729          │
+│                                5. Threshold Optimization: Calibrates threshold = 0.7674          │
 │                                6. Holdout Test Evaluation:                                       │
-│                                   - ROC-AUC: 0.9714                                              │
-│                                   - PR-AUC: 0.7917                                               │
-│                                   - Tuned Precision: 73.74%                                      │
-│                                   - Tuned Recall: 72.28%                                         │
-│                                   - Tuned F1-Score: 0.7300                                       │
+│                                   - ROC-AUC: 0.9557                                              │
+│                                   - PR-AUC: 0.7369                                               │
+│                                   - Tuned Precision: 66.00%                                      │
+│                                   - Tuned Recall: 65.35%                                         │
+│                                   - Tuned F1-Score: 0.6567                                       │
 │                                7. Serializes models/xgboost_fraud_model.joblib                   │
 └───────────────────────────────────────────────────┬──────────────────────────────────────────────┘
                                                     │
@@ -241,9 +241,9 @@ python src/feature_engineering.py
 python src/model_pipeline.py
 ```
 - Aggregates 33 provider features.
-- Trains Dummy, Logistic Regression, and XGBoost with `scale_pos_weight=9.69`.
-- Tunes decision threshold to 0.7729.
-- Evaluates holdout test set (ROC-AUC: 0.9714, F1: 0.7300, Precision: 73.74%, Recall: 72.28%).
+- Trains Dummy, Logistic Regression, and XGBoost with `scale_pos_weight=<dynamic>`.
+- Tunes decision threshold to 0.7674.
+- Evaluates holdout test set (ROC-AUC: 0.9557, F1: 0.6567, Precision: 66.00%, Recall: 65.35%).
 - Serializes model to `models/xgboost_fraud_model.joblib`.
 
 #### Step 5: Generate SHAP Attributions & Visual Explanations

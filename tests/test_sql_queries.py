@@ -9,7 +9,10 @@ from database.db_manager import DatabaseManager
 
 @pytest.fixture(scope="module")
 def db():
-    return DatabaseManager()
+    try:
+        return DatabaseManager()
+    except Exception as e:
+        pytest.skip(f"PostgreSQL not available ({e}). Run: docker compose up -d")
 
 
 def test_sql_kpi_snapshot_query(db):

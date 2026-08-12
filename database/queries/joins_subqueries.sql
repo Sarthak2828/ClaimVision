@@ -1,5 +1,5 @@
 -- =====================================================================
--- Section 2: Joins, CTEs & Subqueries
+-- Section 2: Joins, CTEs & Subqueries (PostgreSQL)
 -- =====================================================================
 
 -- Q6: Comprehensive 3-Way Relational Join with Demographics & Risk
@@ -25,9 +25,9 @@ LIMIT 20;
 WITH PatientChronicProfile AS (
     SELECT
         bene_id,
-        (chronic_alzheimer + chronic_heartfailure + chronic_kidneydisease + 
-         chronic_cancer + chronic_copd + chronic_depression + chronic_diabetes + 
-         chronic_stroke) AS total_chronic_conditions
+        (chronic_alzheimer::int + chronic_heartfailure::int + chronic_kidneydisease::int + 
+         chronic_cancer::int + chronic_copd::int + chronic_depression::int + chronic_diabetes::int + 
+         chronic_stroke::int) AS total_chronic_conditions
     FROM dim_beneficiaries
 ),
 ClaimEnriched AS (
@@ -43,8 +43,8 @@ ClaimEnriched AS (
 )
 SELECT
     fraud_label,
-    ROUND(AVG(total_chronic_conditions), 2) AS avg_patient_chronic_conditions,
-    ROUND(AVG(reimbursed_amount), 2) AS avg_reimbursement,
+    ROUND(AVG(total_chronic_conditions)::numeric, 2) AS avg_patient_chronic_conditions,
+    ROUND(AVG(reimbursed_amount)::numeric, 2) AS avg_reimbursement,
     COUNT(*) AS total_claims
 FROM ClaimEnriched
 GROUP BY fraud_label;
@@ -69,7 +69,7 @@ FROM (
     SELECT
         c.provider_id,
         b.state_id,
-        ROUND(AVG(c.length_of_stay), 2) AS avg_prov_los
+        ROUND(AVG(c.length_of_stay)::numeric, 2) AS avg_prov_los
     FROM fact_inpatient_claims c
     JOIN dim_beneficiaries b ON c.bene_id = b.bene_id
     GROUP BY c.provider_id, b.state_id
@@ -78,7 +78,7 @@ FROM (
 JOIN (
     SELECT
         b.state_id,
-        ROUND(AVG(c.length_of_stay), 2) AS avg_state_los
+        ROUND(AVG(c.length_of_stay)::numeric, 2) AS avg_state_los
     FROM fact_inpatient_claims c
     JOIN dim_beneficiaries b ON c.bene_id = b.bene_id
     GROUP BY b.state_id
