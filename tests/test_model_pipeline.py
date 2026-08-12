@@ -114,7 +114,7 @@ def test_pipeline_full_run():
     """Full pipeline run on synthetic provider data must produce valid metrics."""
     df = make_fake_provider_features(n_providers=300, fraud_rate=0.10)
     pipeline = FraudModelPipeline(random_seed=42, n_folds=2)
-    metrics = pipeline.run(df_features=df)
+    metrics = pipeline.run(df_features=df, save_artifacts=False)
     assert "roc_auc" in metrics
     assert 0.0 <= metrics["roc_auc"] <= 1.0
     assert "tuned_threshold" in metrics

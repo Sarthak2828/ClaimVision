@@ -1,134 +1,134 @@
 [
   {
     "feature":"total_reimbursed",
-    "mean_abs_shap":1.4136834145
+    "mean_abs_shap":1.3794075251
   },
   {
     "feature":"max_length_of_stay",
-    "mean_abs_shap":0.8233695626
+    "mean_abs_shap":0.8647834659
   },
   {
     "feature":"claims_per_beneficiary",
-    "mean_abs_shap":0.462970823
+    "mean_abs_shap":0.3915185034
   },
   {
     "feature":"total_deductible",
-    "mean_abs_shap":0.2730460167
-  },
-  {
-    "feature":"reimbursement_per_beneficiary",
-    "mean_abs_shap":0.1542701572
-  },
-  {
-    "feature":"mean_patient_age",
-    "mean_abs_shap":0.1521032155
+    "mean_abs_shap":0.2027499527
   },
   {
     "feature":"deductible_to_reimbursement_ratio",
-    "mean_abs_shap":0.1430415809
+    "mean_abs_shap":0.2026841789
   },
   {
-    "feature":"median_reimbursed",
-    "mean_abs_shap":0.1398779452
+    "feature":"reimbursement_per_beneficiary",
+    "mean_abs_shap":0.1835410148
   },
   {
-    "feature":"max_reimbursed",
-    "mean_abs_shap":0.1280889213
-  },
-  {
-    "feature":"same_day_duplicate_claims",
-    "mean_abs_shap":0.1195580885
-  },
-  {
-    "feature":"alzheimer_ratio",
-    "mean_abs_shap":0.1132299006
-  },
-  {
-    "feature":"heartfailure_ratio",
-    "mean_abs_shap":0.1128333807
-  },
-  {
-    "feature":"kidneydisease_ratio",
-    "mean_abs_shap":0.1026914641
-  },
-  {
-    "feature":"physician_to_claim_ratio",
-    "mean_abs_shap":0.1002429128
-  },
-  {
-    "feature":"zero_reimbursed_ratio",
-    "mean_abs_shap":0.0994835496
-  },
-  {
-    "feature":"distinct_diagnosis_codes",
-    "mean_abs_shap":0.0947896019
+    "feature":"mean_patient_age",
+    "mean_abs_shap":0.1368919015
   },
   {
     "feature":"distinct_beneficiaries",
-    "mean_abs_shap":0.0903056338
+    "mean_abs_shap":0.1314580292
   },
   {
-    "feature":"mean_length_of_stay",
-    "mean_abs_shap":0.0848091468
+    "feature":"zero_reimbursed_ratio",
+    "mean_abs_shap":0.130311355
+  },
+  {
+    "feature":"alzheimer_ratio",
+    "mean_abs_shap":0.1286690086
+  },
+  {
+    "feature":"heartfailure_ratio",
+    "mean_abs_shap":0.1265775412
+  },
+  {
+    "feature":"median_reimbursed",
+    "mean_abs_shap":0.1088481545
+  },
+  {
+    "feature":"kidneydisease_ratio",
+    "mean_abs_shap":0.0930932611
+  },
+  {
+    "feature":"max_reimbursed",
+    "mean_abs_shap":0.0930006802
+  },
+  {
+    "feature":"physician_to_claim_ratio",
+    "mean_abs_shap":0.0888650119
   },
   {
     "feature":"mean_reimbursed",
-    "mean_abs_shap":0.0794843882
-  },
-  {
-    "feature":"ischemic_heart_ratio",
-    "mean_abs_shap":0.0679871365
-  },
-  {
-    "feature":"diabetes_ratio",
-    "mean_abs_shap":0.0656872913
-  },
-  {
-    "feature":"distinct_operating_physicians",
-    "mean_abs_shap":0.0639174655
+    "mean_abs_shap":0.0844887719
   },
   {
     "feature":"renal_disease_ratio",
-    "mean_abs_shap":0.0601716824
-  },
-  {
-    "feature":"std_reimbursed",
-    "mean_abs_shap":0.0583216511
-  },
-  {
-    "feature":"total_claims",
-    "mean_abs_shap":0.0516767874
-  },
-  {
-    "feature":"outpatient_claims",
-    "mean_abs_shap":0.0505793765
-  },
-  {
-    "feature":"mean_chronic_conditions",
-    "mean_abs_shap":0.0501621962
-  },
-  {
-    "feature":"mean_deductible",
-    "mean_abs_shap":0.0465291254
-  },
-  {
-    "feature":"distinct_attending_physicians",
-    "mean_abs_shap":0.0453466401
-  },
-  {
-    "feature":"inpatient_claims",
-    "mean_abs_shap":0.0375318602
-  },
-  {
-    "feature":"zero_reimbursed_count",
-    "mean_abs_shap":0.0264656618
-  },
-  {
-    "feature":"inpatient_ratio",
-    "mean_abs_shap":0.0263659339
+    "mean_abs_shap":0.0840108246
   },
   {
     "feature":"distinct_procedures",
-    "mean_abs_shap":0.0235622134
+    "mean_abs_shap":0.0750657171
+  },
+  {
+    "feature":"ischemic_heart_ratio",
+    "mean_abs_shap":0.0745354146
+  },
+  {
+    "feature":"diabetes_ratio",
+    "mean_abs_shap":0.0738842487
+  },
+  {
+    "feature":"same_day_duplicate_claims",
+    "mean_abs_shap":0.0687584803
+  },
+  {
+    "feature":"distinct_diagnosis_codes",
+    "mean_abs_shap":0.0669145808
+  },
+  {
+    "feature":"total_claims",
+    "mean_abs_shap":0.0667073056
+  },
+  {
+    "feature":"mean_length_of_stay",
+    "mean_abs_shap":0.064571552
+  },
+  {
+    "feature":"mean_deductible",
+    "mean_abs_shap":0.0586501099
+  },
+  {
+    "feature":"mean_chronic_conditions",
+    "mean_abs_shap":0.0560186245
+  },
+  {
+    "feature":"std_reimbursed",
+    "mean_abs_shap":0.0530174561
+  },
+  {
+    "feature":"zero_reimbursed_count",
+    "mean_abs_shap":0.0371490456
+  },
+  {
+    "feature":"distinct_operating_physicians",
+    "mean_abs_shap":0.0365096107
+  },
+  {
+    "feature":"distinct_attending_physicians",
+    "mean_abs_shap":0.0333636999
+  },
+  {
+    "feature":"outpatient_claims",
+    "mean_abs_shap":0.0284442604
+  },
+  {
+    "feature":"inpatient_claims",
+    "mean_abs_shap":0.0195160005
+  },
+  {
+    "feature":"inpatient_ratio",
+    "mean_abs_shap":0.0135025224
   }
 ]

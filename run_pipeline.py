@@ -68,10 +68,10 @@ def execute_pipeline(sample_mode: bool = False, skip_etl: bool = False) -> None:
     elapsed = time.perf_counter() - start_total
     logger.info("=" * 80)
     logger.info(f"CLAIMVISION PIPELINE EXECUTION COMPLETE in {elapsed:.2f} seconds!")
-    logger.info(f"Final Model Test ROC-AUC: {metrics['test_set']['roc_auc']:.4f}")
-    logger.info(f"Final Model Tuned F1-Score: {metrics['test_set']['tuned_threshold']['f1_score']:.4f}")
-    logger.info(f"Final Model Tuned Precision: {metrics['test_set']['tuned_threshold']['precision']:.4f}")
-    logger.info(f"Final Model Tuned Recall: {metrics['test_set']['tuned_threshold']['recall']:.4f}")
+    logger.info(f"Final Model Test ROC-AUC: {metrics['roc_auc']:.4f}")
+    logger.info(f"Final Model Tuned F1-Score: {metrics['tuned_threshold']['f1_score']:.4f}")
+    logger.info(f"Final Model Tuned Precision: {metrics['tuned_threshold']['precision']:.4f}")
+    logger.info(f"Final Model Tuned Recall: {metrics['tuned_threshold']['recall']:.4f}")
     logger.info("=" * 80)
 
 

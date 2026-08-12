@@ -320,7 +320,9 @@ class FraudModelPipeline:
         logger.info("Saved metric results to %s", metrics_path)
         return model_path
 
-    def run(self, df_features: Optional[pd.DataFrame] = None) -> Dict[str, Any]:
+    def run(
+        self, df_features: Optional[pd.DataFrame] = None, save_artifacts: bool = True
+    ) -> Dict[str, Any]:
         """Execute the full ML pipeline end-to-end."""
         if df_features is None:
             fe = FeatureEngineer()
@@ -331,7 +333,8 @@ class FraudModelPipeline:
         self.train_xgboost(X_train, y_train)
         self.tune_threshold(X_train, y_train)
         metrics = self.evaluate_on_test(X_test, y_test)
-        self.save_model()
+        if save_artifacts:
+            self.save_model()
 
         print("\n=== FINAL EVALUATION METRICS ===")
         print(json.dumps(metrics, indent=2))
