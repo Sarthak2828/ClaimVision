@@ -1,7 +1,9 @@
 # ClaimVision — Power BI Dashboard Implementation Guide
 
 ## Executive Overview
-The ClaimVision Power BI solution delivers an executive-ready, decision-support reporting architecture designed to translate machine learning predictions and claims data engineering pipelines into actionable business insights for claims directors, Special Investigation Unit (SIU) analysts, and chief medical officers.
+The ClaimVision analytical pipeline generates curated analytical datasets and dashboard specifications for Power BI. The solution delivers an executive-ready, decision-support reporting architecture designed to translate machine learning predictions and claims data engineering pipelines into actionable business insights for claims directors, Special Investigation Unit (SIU) analysts, and chief medical officers.
+
+Curated tables are exported to `data/analytical/` by `src/powerbi_exporter.py`, and this guide defines the complete data model, star schema relationships, visual specifications, and layout for loading into Microsoft Power BI Desktop.
 
 ---
 
